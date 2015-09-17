@@ -9,3 +9,6 @@ As such, I will start by uploading all the currently working sub-system Sketches
 
 4:45pm - Wed, Sep 16th 2015
 /robofred
+
+
+Does this link (to IR Rx/Tx) work? https://github.com/Andy-Org/Andy/tree/master/IR_RxTx
