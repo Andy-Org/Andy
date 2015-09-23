@@ -1,0 +1,23 @@
+/*
+  This is the simplest sketch to drive a Piezo Buzzer
+  Using the "Tone" command, give it a Pin, Freq, and duration
+  Then use "NoTone" to stop it (if you're using it in a loop 
+*/
+
+
+const int tPin = 5;
+
+void setup() 
+{
+  pinMode(tPin, OUTPUT);
+
+  tone(tPin, 60, 100);
+  //noTone(tPin);
+    
+}
+
+
+void loop() 
+{
+
+}
