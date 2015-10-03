@@ -9,7 +9,7 @@
  */
 
 
-int ledPin = 13; // choose the pin for the LED
+
 int inPin = 7;   // choose the input pin (for a pushbutton)
 int inPin2 = 8;   // choose the 2nd input pin (for a pushbutton)
 int val = 0;     // variable for reading the pin status
@@ -21,10 +21,11 @@ int yCount = 0;  // Set the 2nd counter
 
 
 void setup() {
-  pinMode(ledPin, OUTPUT);  // declare LED as output
+
   pinMode(inPin, INPUT);    // declare pushbutton as input
   pinMode(inPin2, INPUT);   // declare 2nd PB as input
   digitalWrite(inPin, HIGH);  // put inPin Low by default
+  digitalWrite(inPin2, HIGH);
   Serial.begin(9600);      // start the Serial monitor 
 }
 
@@ -32,18 +33,20 @@ void loop(){
   val = digitalRead(inPin);  // read input value
   val2 = digitalRead(inPin2);  // read input value
 
-  if (val == HIGH) {         // check if the input is HIGH (button pushed)
-    // DO NOTHING HERE
-  } else if (val == LOW) {
+  if (val == LOW) {
     xCount = xCount + 1;
     Serial.print("Val1 = ");    // debug xCount
-    Serial.println(xCount);       // debug xCount
+    Serial.print(xCount);       // debug xCount
+    Serial.print("   ");
+    Serial.print("Val2 = ");
+    Serial.println(yCount);
   }
 
-  if (val2 == HIGH) {
-    // DO NOTHING HERE
-  } else if (val2 == LOW) {
+  if (val2 == LOW) {
     yCount = yCount + 1;
+    Serial.print("Val1 = ");    // debug xCount
+    Serial.print(xCount);       // debug xCount
+    Serial.print("   ");
     Serial.print("Val2 = ");
     Serial.println(yCount);
   }
