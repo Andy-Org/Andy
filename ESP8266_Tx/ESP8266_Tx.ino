@@ -7,7 +7,7 @@
 
 #define dFlag 1   // Debug Flag: 1 for Verbose, 0 for None
 
-int tenmpF = 5000;  // MODIFY (FOR TESTING ONLY)
+int tenmpF = 400;  // MODIFY (FOR TESTING ONLY)
 
 #define rxPin 10  // Arduino Mini RX Pin
 #define txPin 11  // Arduino Mini TX Pin
