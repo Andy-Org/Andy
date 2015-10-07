@@ -1,15 +1,17 @@
 #include <SoftwareSerial.h>
 
-#define SSID        "Farshad"
+#define SSID        "Catch Herpies"
 #define PASS        "afafafafaf" // My luggage has the same combination!
 #define DEST_HOST   "www.coopx.org"
 #define DEST_PAGE   "/esp8266.txt"
-#define DEST_IP     "208.113.160.61"
+#define DEST_IP     "208.113.160.61"    // IP ADDRESS - you can't use Domain cuz there's no DNS support
 // #define DEST_IP     "208.113.160.61" // COOPX.ORG IP ADDRESS
 #define TIMEOUT     5000 // mS
 #define CONTINUE    false
 #define HALT        true
-#define ECHO_COMMANDS // Un-comment to echo AT+ commands to serial monitor
+#define listWifi  0   // List Available WiFi Networks (1 for Yes, 0 for No)
+
+// #define ECHO_COMMANDS // Un-comment to echo AT+ commands to serial monitor
 
 #define rxPin 10
 #define txPin 11
@@ -113,7 +115,7 @@ void setup()
   Serial1.begin(WiFiBAUD);        // Communication with ESP8266 via 5V/3.3V level shifter
 
   Serial1.setTimeout(TIMEOUT);
-  Serial.println("ESP8266 Demo");
+  Serial.println("******** ESP8266 Demo ********");
 
   delay(2000);
 
@@ -122,8 +124,10 @@ void setup()
   echoCommand("AT+GMR", "OK", CONTINUE);   // Retrieves the firmware ID (version number) of the module.
   echoCommand("AT+CWMODE?", "OK", CONTINUE); // Get module access mode.
 
-  // echoCommand("AT+CWLAP", "OK", CONTINUE); // List available access points - DOESN't WORK FOR ME
-
+  if (listWifi == 1){
+    echoCommand("AT+CWLAP", "OK", CONTINUE); // List available access points - DOESN't WORK FOR ME
+  }
+  
   echoCommand("AT+CWMODE=1", "", HALT);    // Station mode
   echoCommand("AT+CIPMUX=1", "", HALT);    // Allow multiple connections (we'll only use the first).
 
@@ -158,7 +162,12 @@ void loop()
   if (!echoCommand("AT+CIPSTATUS", "OK", CONTINUE)) return;
 
   // Build HTTP request.
-  cmd = "GET / HTTP/1.1\r\nHost: "; cmd += DEST_HOST, DEST_PAGE; cmd += ":80\r\n\r\n";
+  cmd = "GET /"; cmd+= DEST_PAGE; cmd+=" HTTP/1.1\r\nHost: "; cmd += DEST_HOST; cmd += ":80\r\n\r\n";
+
+  Serial.println("***********************************************");
+  Serial.println(cmd);
+  Serial.println("***********************************************");
+  
 
   // Ready the module to receive raw data
   if (!echoCommand("AT+CIPSEND=0," + String(cmd.length()), ">", CONTINUE))
@@ -175,6 +184,9 @@ void loop()
   while (true)
     while (Serial1.available())
       Serial.write(Serial1.read());
+
+      Serial.println("");
+      Serial.println("********* EOF *********");
 
   errorHalt("ONCE ONLY");
 }
