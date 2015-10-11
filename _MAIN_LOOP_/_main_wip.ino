@@ -74,4 +74,30 @@ xdffd,.mx
 void loop(){
 
 
+#define COUNTER_MAX 255
+#define COUNTER_MIN 0
+#define UP 1
+#define DOWN -1
+
+byte counter = 0;
+char direction = UP;
+
+
+
+void loop()
+{
+
+    leds.setPixelColor(0, 0, 0, counter);
+    leds.setPixelColor(1, 0, counter, 0);
+    leds.show();   
+    delay(10);
+    
+    counter += direction;
+    if ( COUNTER_MAX == counter )
+      direction = DOWN;
+    else if ( COUNTER_MIN == counter )
+      direction = UP;
+
+}
+
 }
